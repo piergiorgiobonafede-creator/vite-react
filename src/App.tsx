@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ChevronRight, ChevronLeft, Lock, EyeOff, ShieldCheck } from 'lucide-react';
 
 const UnityJournal = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -21,46 +20,48 @@ const UnityJournal = () => {
   };
 
   const pages = [
-    {
-      type: 'cover',
-      content: (
-        <div className="h-full w-full bg-[#020617] text-white p-10 flex flex-col justify-between font-sans">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2 bg-blue-500/10 text-blue-400 text-[10px] font-black px-3 py-1 rounded-full border border-blue-500/20">
-              <ShieldCheck size={12} /> ARCHIVIO PRIVATO
-            </div>
-            <EyeOff size={16} className="text-slate-700" />
-          </div>
-          <div>
-            <h1 className="text-5xl font-black tracking-tighter leading-none mb-6">
-              UNITY<br/><span className="text-blue-500 italic font-light tracking-normal text-4xl uppercase">Studio</span>
-            </h1>
-            <div className="h-1 w-16 bg-white mb-8"></div>
-            <p className="text-slate-400 text-sm font-light leading-relaxed border-l border-slate-800 pl-4 uppercase tracking-widest">
-              Appunti personali e<br/>bozze di sviluppo
-            </p>
-          </div>
-          <p className="text-[10px] text-slate-600 font-mono uppercase tracking-[0.3em]">Piergiorgio // 2026</p>
+    { title: "Benvenuto", content: "Questa è la tua rivista privata UnityJournal." },
+    { title: "Obiettivi 2026", content: "Organizzare la cartella AppLAVORO." },
+    { title: "Note Private", content: "PIN di accesso: 1234." }
+  ];
+
+  if (isLocked) {
+    return (
+      <div style={{ height: '100vh', backgroundColor: '#000', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#fff', fontFamily: 'sans-serif' }}>
+        <div style={{ fontSize: '50px', marginBottom: '20px' }}>🔒</div>
+        <h2>Area Riservata</h2>
+        <form onSubmit={handleLogin} style={{ textAlign: 'center' }}>
+          <input type="password" value={pin} onChange={(e) => setPin(e.target.value)} placeholder="PIN" style={{ padding: '12px', borderRadius: '8px', border: 'none', marginBottom: '10px', textAlign: 'center' }} />
+          {error && <p style={{ color: '#ff4d4d' }}>PIN Errato!</p>}
+          <br />
+          <button type="submit" style={{ padding: '10px 25px', borderRadius: '20px', backgroundColor: '#007bff', color: '#fff', border: 'none' }}>SBLOCCA</button>
+        </form>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ height: '100vh', backgroundColor: '#1a1a1a', color: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif' }}>
+      <header style={{ padding: '20px', borderBottom: '1px solid #333', display: 'flex', justifyContent: 'space-between' }}>
+        <h1 style={{ fontSize: '20px', color: '#007bff' }}>UnityJournal</h1>
+        <button onClick={() => setIsLocked(true)}>Esci</button>
+      </header>
+      <main style={{ flex: 1, padding: '20px' }}>
+        <div style={{ backgroundColor: '#2d2d2d', padding: '25px', borderRadius: '15px' }}>
+          <h2>{pages[currentPage].title}</h2>
+          <p>{pages[currentPage].content}</p>
         </div>
-      )
-    },
-    {
-      type: 'content',
-      content: (
-        <div className="h-full w-full bg-white p-10 text-slate-800 font-sans">
-          <header className="flex justify-between items-center mb-10 border-b border-slate-100 pb-4">
-            <span className="font-black text-[10px] text-blue-600 uppercase tracking-widest">Modulo 01</span>
-            <span className="text-[10px] font-mono font-bold bg-slate-100 px-2 py-1 rounded">PAG 02</span>
-          </header>
-          <h2 className="text-3xl font-black mb-8 uppercase tracking-tighter text-slate-950">
-            L'Interfaccia<br/><span className="text-blue-600 italic underline decoration-blue-100 decoration-8 underline-offset-4">Unity Editor</span>
-          </h2>
-          <div className="space-y-6">
-            <div className="p-6 bg-slate-50 border-l-4 border-blue-500 rounded-r-xl">
-              <h4 className="text-[10px] font-black uppercase text-slate-900 mb-2">Hierarchy</h4>
-              <p className="text-xs text-slate-600 leading-relaxed font-medium">È la lista di tutti gli oggetti presenti nella tua scena attuale.</p>
-            </div>
-            <div className="p-6 bg-slate-50 border-l-4 border-slate-300 rounded-r-xl">
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
+          <button onClick={() => setCurrentPage(prev => prev - 1)} disabled={currentPage === 0}>{"<"}</button>
+          <span>Pagina {currentPage + 1}</span>
+          <button onClick={() => setCurrentPage(prev => prev + 1)} disabled={currentPage === pages.length - 1}>{">"}</button>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default UnityJournal;            <div className="p-6 bg-slate-50 border-l-4 border-slate-300 rounded-r-xl">
               <h4 className="text-[10px] font-black uppercase text-slate-900 mb-2">Inspector</h4>
               <p className="text-xs text-slate-600 leading-relaxed font-medium">Qui modifichi le proprietà dell'oggetto selezionato.</p>
             </div>

@@ -4,7 +4,7 @@ const UnityJournal = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isLocked, setIsLocked] = useState(true);
   const [pin, setPin] = useState("");
-  const [error, setError] = useState(false); 
+  const [error, setError] = useState(false);
 
   const CORRECT_PIN = "1234";
 

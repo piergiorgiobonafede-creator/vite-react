@@ -6,7 +6,7 @@ const UnityJournal = () => {
   const [pin, setPin] = useState("");
   const [error, setError] = useState(false);
 
-  const CORRECT_PIN = "1234";
+  const CORRECT_PIN = "1234"; 
 
   const handleLogin = (e) => {
     e.preventDefault();
